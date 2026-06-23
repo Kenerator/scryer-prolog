@@ -101,8 +101,8 @@ fn repeated_float_loads_keep_float_table_stable() {
 #[test]
 fn checked_facade_maps_malformed_query_without_panicking() {
     let mut machine = MachineBuilder::default().build();
-    let parse_status: Result<(), ParserError> = machine.parse_query_checked("parent(");
-    assert!(parse_status.is_err());
+    let validation_status: Result<(), ParserError> = machine.validate_query_term("parent(");
+    assert!(validation_status.is_err());
 
     match machine.run_query_checked("parent(") {
         Err(RunQueryError::Parser(err)) => {
@@ -116,7 +116,7 @@ fn checked_facade_maps_malformed_query_without_panicking() {
 #[test]
 fn checked_facade_runs_valid_query() {
     let mut machine = MachineBuilder::default().build();
-    assert!(machine.parse_query_checked("true.").is_ok());
+    assert!(machine.validate_query_term("true.").is_ok());
 
     let answers = machine
         .run_query_checked("true.")
