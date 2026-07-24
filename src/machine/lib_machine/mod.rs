@@ -4,7 +4,7 @@ use std::process::ExitCode;
 use std::rc::Rc;
 
 use crate::atom_table;
-use crate::heap_iter::{stackful_post_order_iter, NonListElider};
+use crate::heap_iter::{NonListElider, stackful_post_order_iter};
 pub use crate::machine::heap::AllocError;
 use crate::machine::machine_errors::CompilationError;
 use crate::machine::machine_indices::VarKey;
@@ -16,7 +16,7 @@ use crate::offset_table::*;
 pub use crate::parser::ast::ParserError;
 use crate::parser::ast::{Term as ASTTerm, Var, VarPtr};
 use crate::parser::parser::{Parser, Tokens};
-use crate::read::{write_term_to_heap, TermWriteResult};
+use crate::read::{TermWriteResult, write_term_to_heap};
 use crate::types::UntypedArenaPtr;
 
 use dashu::{Integer, Rational};

@@ -1,6 +1,6 @@
 use super::*;
-use crate::arena::ArenaHeaderTag;
 use crate::MachineBuilder;
+use crate::arena::ArenaHeaderTag;
 
 const REPEATED_LOAD_PROBE_PROGRAM: &str = r#"
     :- discontiguous(repeated_loader_probe_predicate/2).
@@ -142,6 +142,10 @@ fn checked_query_error_type_exposes_allocation_errors() {
 }
 
 #[test]
+#[cfg_attr(
+    miri,
+    ignore = "loader setup accesses the filesystem under Miri isolation"
+)]
 fn checked_module_load_loads_program_status_only() {
     let mut machine = MachineBuilder::default().build();
     let status: Result<(), LoadModuleError> =
@@ -157,6 +161,10 @@ fn checked_module_load_loads_program_status_only() {
 }
 
 #[test]
+#[cfg_attr(
+    miri,
+    ignore = "loader setup accesses the filesystem under Miri isolation"
+)]
 fn checked_module_load_maps_loader_failure_without_panicking() {
     let mut machine = MachineBuilder::default().build();
     let status: Result<(), LoadModuleError> =
@@ -165,6 +173,10 @@ fn checked_module_load_maps_loader_failure_without_panicking() {
 }
 
 #[test]
+#[cfg_attr(
+    miri,
+    ignore = "loader setup accesses the filesystem under Miri isolation"
+)]
 #[should_panic(expected = "Failed to load module string")]
 fn load_module_string_panics_on_loader_failure() {
     let mut machine = MachineBuilder::default().build();
